@@ -1,0 +1,5 @@
+task :build => "Cat.class"
+
+file "Cat.class" => ["Cat.java"] do
+  sh "javac Cat.java"
+end
