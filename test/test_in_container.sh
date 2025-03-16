@@ -12,7 +12,7 @@ run_test() {
   cat $f_in | bash cat.sh > $f_out
 
   diff -u $f_in $f_out
-  status=$?
+  local status=$?
   if [ $status -ne 0 ]; then
     echo "--------"
     FAILED="${FAILED} ${f_in}"
@@ -30,8 +30,20 @@ print_target_list() {
 }
 
 # --------------------------------
+# args
 
 readonly TARGET_HEAD="$1"; shift
+
+# --------------------------------
+
+if [ -e Rakefile ]; then
+  rake build
+  status=$?
+  if [ $status -ne 0 ]; then
+    echo "build failed" >&2
+    exit $status
+  fi
+fi
 
 for f_in in $(print_target_list "$TARGET_HEAD"); do
   run_test $f_in

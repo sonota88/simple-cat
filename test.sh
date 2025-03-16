@@ -1,5 +1,15 @@
 set -o nounset
 
+print_this_dir() {
+  (
+    cd "$(dirname "$0")"
+    pwd
+  )
+}
+
+# --------------------------------
+# args
+
 if [ $# -ge 1 ]; then
   readonly LANG="$1"; shift
 else
@@ -20,7 +30,11 @@ else
   readonly TARGET_HEAD=
 fi
 
-cd "impls/${LANG}"
+# --------------------------------
+
+readonly PROJECT_HOME="$(print_this_dir)"
+
+cd "${PROJECT_HOME}/impls/${LANG}"
 
 readonly TEMP_SH=./.test.sh
 cp ../../test/test_in_container.sh $TEMP_SH
