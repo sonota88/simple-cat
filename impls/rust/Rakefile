@@ -1,0 +1,9 @@
+require "rake/clean"
+
+CLEAN.include "cat"
+
+task :build => "cat"
+
+file "cat" => ["cat.rs"] do
+  sh "rustc cat.rs"
+end
