@@ -9,7 +9,7 @@ FAILED=
 run_test() {
   local f_in="$1"; shift
   local f_out=/tmp/out
-  
+
   cat $f_in | bash cat.sh > $f_out
 
   diff -u $f_in $f_out
@@ -36,6 +36,7 @@ print_target_list() {
 readonly TARGET_HEAD="$1"; shift
 
 # --------------------------------
+# build
 
 if [ -e Rakefile ]; then
   rake build
@@ -45,6 +46,8 @@ if [ -e Rakefile ]; then
     exit $status
   fi
 fi
+
+# --------------------------------
 
 for f_in in $(print_target_list "$TARGET_HEAD"); do
   run_test $f_in
