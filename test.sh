@@ -1,4 +1,5 @@
 set -o nounset
+# set -o xtrace
 
 print_this_dir() {
   (

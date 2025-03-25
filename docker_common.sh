@@ -2,24 +2,28 @@ set -o nounset
 
 readonly HOST_WORK_DIR="$(pwd)"
 readonly HOST_TEST_DIR="$(pwd)/../../test"
+readonly CONT_WORK_DIR="${HOME}/work"
+readonly CONT_TEST_DIR="${HOME}/test"
 
 cmd_build() {
   docker build \
+    --build-arg user=$USER \
+    --build-arg group=$(id -gn) \
     --progress plain \
     -t $IMAGE .
 }
 
 cmd_run_it() {
   docker run --rm -it \
-    -v "${HOST_WORK_DIR}:/root/work" \
-    -v "${HOST_TEST_DIR}:/root/test" \
+    -v "${HOST_WORK_DIR}:${CONT_WORK_DIR}" \
+    -v "${HOST_TEST_DIR}:${CONT_TEST_DIR}" \
     $IMAGE "$@"
 }
 
 cmd_run() {
   docker run --rm -i \
-    -v "${HOST_WORK_DIR}:/root/work" \
-    -v "${HOST_TEST_DIR}:/root/test" \
+    -v "${HOST_WORK_DIR}:${CONT_WORK_DIR}" \
+    -v "${HOST_TEST_DIR}:${CONT_TEST_DIR}" \
     $IMAGE "$@"
 }
 

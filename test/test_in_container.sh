@@ -1,8 +1,9 @@
 # This script is executed inside a container.
 
 set -o nounset
+# set -o xtrace
 
-readonly TEST_DIR=/root/test
+readonly TEST_DIR=${HOME}/test
 FAILED=
 
 run_test() {
