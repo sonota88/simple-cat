@@ -1,0 +1,10 @@
+require "rake/clean"
+
+CLEAN.include "cat"
+CLEAN.include "*.o"
+
+task :build => "cat"
+
+file "cat" => ["cat.zig"] do
+  sh "zig build-exe cat.zig"
+end
