@@ -1,0 +1,9 @@
+require "rake/clean"
+
+CLEAN.include "*.beam"
+
+task :build => "cat.beam"
+
+file "cat.beam" => ["cat.erl"] do
+  sh "erlc cat.erl"
+end
